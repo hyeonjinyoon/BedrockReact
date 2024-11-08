@@ -28,6 +28,10 @@
   color: #61dafb;
 }
 
+.safe-area {
+  padding-top: env(safe-area-inset-top);
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
