@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import { WebView } from 'react-native-webview';
 
 function App() {
   const settings = loadData("userSettings");
@@ -17,13 +18,10 @@ function App() {
   const iframeSrc = `https://bedrock.es?deviceId=${deviceId}`;
 
   return (
-    <div className="App safe-area">
-      <iframe
-        src={iframeSrc}
-        title="Bedrock Site"
-        style={{ width: '100%', height: '100vh', border: 'none' }}
-      ></iframe>
-    </div>
+<WebView
+      source={{ uri: iframeSrc }}
+      style={{ flex: 1 }}
+    />
   );
 }
 
