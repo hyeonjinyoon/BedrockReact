@@ -1,42 +1,30 @@
-import React from 'react';
-import './App.css';
-import { WebView } from 'react-native-webview';
+// App.js
+import React, { useEffect } from 'react';
+import { App as CapacitorApp } from '@capacitor/app';
 
 function App() {
-  const settings = loadData("userSettings");
+  useEffect(() => {
+    // 예시: 앱이 백그라운드로 갔다가 다시 돌아왔을 때 수행할 작업
+    CapacitorApp.addListener('appStateChange', (state) => {
+      console.log('App state changed. Is active:', state.isActive);
+    });
 
-  var deviceId = "";
+    // 예시: 앱이 종료되기 직전 수행할 작업
+    CapacitorApp.addListener('backButton', () => {
+      console.log('Back button pressed');
+    });
 
-  if (settings == null) {
-    deviceId = generateUUID();
-    saveData("userSettings", { device_id: deviceId });
-  }
-  else {
-    deviceId = settings.device_id;
-  }
-
-  const iframeSrc = `https://bedrock.es?deviceId=${deviceId}`;
+    // Clean up listeners on component unmount
+    return () => {
+      CapacitorApp.removeAllListeners();
+    };
+  }, []);
 
   return (
-<WebView
-      source={{ uri: iframeSrc }}
-      style={{ flex: 1 }}
-    />
-  );
-}
-
-function saveData(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
-}
-
-function loadData(key) {
-  const data = localStorage.getItem(key);
-  return data ? JSON.parse(data) : null;
-}
-
-function generateUUID() {
-  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    <div className="App">
+      <h1>Welcome to My Capacitor App</h1>
+      <p>웹뷰로 https://bedrock.es 사이트를 로드 중입니다.</p>
+    </div>
   );
 }
 
