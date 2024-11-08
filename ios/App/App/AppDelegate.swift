@@ -11,8 +11,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 
         // 이 코드를 추가하여 스크롤의 탄성 효과를 활성화합니다.
-        let webView = bridge?.getWebView()
-        webView?.scrollView.bounces = true
+        if let viewController = self.window?.rootViewController as? CAPBridgeViewController {
+            viewController.webView?.scrollView.bounces = true
+        }
 
         return true
     }
