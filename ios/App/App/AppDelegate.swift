@@ -8,6 +8,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+
+        // 이 코드를 추가하여 스크롤의 탄성 효과를 활성화합니다.
+        let webView = bridge?.getWebView()
+        webView?.scrollView.bounces = true
+
         return true
     }
 
